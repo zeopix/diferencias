@@ -84,6 +84,16 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // _security_check
+        if ($pathinfo === '/login_check') {
+            return array('_route' => '_security_check');
+        }
+
+        // _security_logout
+        if ($pathinfo === '/logout') {
+            return array('_route' => '_security_logout');
+        }
+
         // mii_game_entrada_index
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
