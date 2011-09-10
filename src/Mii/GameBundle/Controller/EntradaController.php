@@ -13,6 +13,6 @@ class EntradaController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('MiiGameBundle:entrada:index.html.twig');
+        return $this->render('MiiGameBundle:Entrada:index.html.twig');
     }
 }
