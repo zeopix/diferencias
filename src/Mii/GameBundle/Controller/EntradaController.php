@@ -15,4 +15,12 @@ class EntradaController extends Controller
     {
         return $this->render('MiiGameBundle:Entrada:index.html.twig');
     }
+    
+    /**
+     * @Route("/facebook/")
+     */
+    public function facebookAction()
+    {
+        return $this->render('MiiGameBundle:Entrada:facebook.html.twig');
+    }
 }
