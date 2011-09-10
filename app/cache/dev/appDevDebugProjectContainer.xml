@@ -207,16 +207,22 @@
     <parameter key="security.authentication.session_strategy.strategy">migrate</parameter>
     <parameter key="security.access.always_authenticate_before_granting">false</parameter>
     <parameter key="security.authentication.hide_user_not_found">true</parameter>
-    <parameter key="security.role_hierarchy.roles" type="collection">
-      <parameter key="ROLE_ADMIN" type="collection">
-        <parameter>ROLE_USER</parameter>
-      </parameter>
-      <parameter key="ROLE_SUPER_ADMIN" type="collection">
-        <parameter>ROLE_USER</parameter>
-        <parameter>ROLE_ADMIN</parameter>
-        <parameter>ROLE_ALLOWED_TO_SWITCH</parameter>
-      </parameter>
+    <parameter key="fos_facebook.options.public" type="collection">
+      <parameter key="app_url">http://apps.facebook.com/diferencias/</parameter>
+      <parameter key="server_url">http://mallify.com/diferencias/</parameter>
+      <parameter key="remember_me">true</parameter>
+      <parameter key="check_path">/login_check</parameter>
+      <parameter key="login_path">/login</parameter>
+      <parameter key="use_forward">false</parameter>
+      <parameter key="always_use_default_target_path">false</parameter>
+      <parameter key="default_target_path">/</parameter>
+      <parameter key="target_path_parameter">_target_path</parameter>
+      <parameter key="use_referer">false</parameter>
+      <parameter key="failure_path">null</parameter>
+      <parameter key="failure_forward">false</parameter>
+      <parameter key="display">page</parameter>
     </parameter>
+    <parameter key="security.role_hierarchy.roles" type="collection"/>
     <parameter key="twig.class">Twig_Environment</parameter>
     <parameter key="twig.loader.class">Symfony\Bundle\TwigBundle\Loader\FilesystemLoader</parameter>
     <parameter key="templating.engine.twig.class">Symfony\Bundle\TwigBundle\TwigEngine</parameter>
@@ -370,8 +376,8 @@
     <parameter key="fos_facebook.helper.class">FOS\FacebookBundle\Templating\Helper\FacebookHelper</parameter>
     <parameter key="fos_facebook.twig.class">FOS\FacebookBundle\Twig\Extension\FacebookExtension</parameter>
     <parameter key="fos_facebook.file">/Applications/MAMP/htdocs/diferencias/app/../vendor/facebook/src/base_facebook.php</parameter>
-    <parameter key="fos_facebook.app_id">123456879</parameter>
-    <parameter key="fos_facebook.secret">s3cr3t</parameter>
+    <parameter key="fos_facebook.app_id">145597308865831</parameter>
+    <parameter key="fos_facebook.secret">e2b541a0623613634f753d044638367d</parameter>
     <parameter key="fos_facebook.cookie">true</parameter>
     <parameter key="fos_facebook.domain">null</parameter>
     <parameter key="fos_facebook.logging">true</parameter>
@@ -380,6 +386,7 @@
       <parameter>email</parameter>
       <parameter>user_birthday</parameter>
       <parameter>user_location</parameter>
+      <parameter>publish_stream</parameter>
     </parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
@@ -1184,15 +1191,10 @@
     </service>
     <service id="security.authentication.manager" class="Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager" public="false">
       <argument type="collection">
+        <argument type="service" id="fos_facebook.auth"/>
         <argument type="service">
-          <service class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false">
-            <argument type="service" id="security.user.provider.concrete.in_memory"/>
-            <argument type="service">
-              <service class="Symfony\Component\Security\Core\User\UserChecker" public="false"/>
-            </argument>
-            <argument>secured_area</argument>
-            <argument type="service" id="security.encoder_factory"/>
-            <argument>true</argument>
+          <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+            <argument>4e6b7a3dec431</argument>
           </service>
         </argument>
       </argument>
@@ -1208,16 +1210,7 @@
             <tag name="security.voter" priority="245"/>
             <argument type="service">
               <service class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
-                <argument type="collection">
-                  <argument key="ROLE_ADMIN" type="collection">
-                    <argument>ROLE_USER</argument>
-                  </argument>
-                  <argument key="ROLE_SUPER_ADMIN" type="collection">
-                    <argument>ROLE_USER</argument>
-                    <argument>ROLE_ADMIN</argument>
-                    <argument>ROLE_ALLOWED_TO_SWITCH</argument>
-                  </argument>
-                </argument>
+                <argument type="collection"/>
               </service>
             </argument>
           </service>
@@ -1239,21 +1232,7 @@
         <service class="Symfony\Bundle\SecurityBundle\Security\FirewallMap" public="false">
           <argument type="service" id="service_container"/>
           <argument type="collection">
-            <argument key="security.firewall.map.context.dev" type="service">
-              <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/(_(profiler|wdt)|css|images|js)/</argument>
-              </service>
-            </argument>
-            <argument key="security.firewall.map.context.login" type="service">
-              <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/demo/secured/login$</argument>
-              </service>
-            </argument>
-            <argument key="security.firewall.map.context.secured_area" type="service">
-              <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-                <argument>^/demo/secured/</argument>
-              </service>
-            </argument>
+            <argument key="security.firewall.map.context.public" type="service" id="security.request_matcher.0ccca95482acf81566a65a241ba62f769ef531e789ba042a02f09cc5316c11e63615e8c0"/>
           </argument>
         </service>
       </argument>
@@ -1266,45 +1245,35 @@
       <tag name="templating.helper" alias="security"/>
       <argument type="service" id="security.context"/>
     </service>
-    <service id="security.user.provider.concrete.in_memory" class="Symfony\Component\Security\Core\User\InMemoryUserProvider" public="false">
-      <call method="createUser">
-        <argument type="service">
-          <service class="Symfony\Component\Security\Core\User\User" public="false">
-            <argument>user</argument>
-            <argument>userpass</argument>
-            <argument type="collection">
-              <argument>ROLE_USER</argument>
-            </argument>
-          </service>
-        </argument>
-      </call>
-      <call method="createUser">
-        <argument type="service">
-          <service class="Symfony\Component\Security\Core\User\User" public="false">
-            <argument>admin</argument>
-            <argument>adminpass</argument>
-            <argument type="collection">
-              <argument>ROLE_ADMIN</argument>
-            </argument>
-          </service>
-        </argument>
-      </call>
+    <service id="security.request_matcher.0ccca95482acf81566a65a241ba62f769ef531e789ba042a02f09cc5316c11e63615e8c0" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/.*</argument>
     </service>
-    <service id="security.firewall.map.context.dev" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
-      <argument type="collection"/>
-      <argument>null</argument>
-    </service>
-    <service id="security.firewall.map.context.login" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
-      <argument type="collection"/>
-      <argument>null</argument>
-    </service>
-    <service id="security.firewall.map.context.secured_area" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
+    <service id="security.firewall.map.context.public" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext">
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\ChannelListener" public="false">
             <tag name="monolog.logger" channel="security"/>
             <argument type="service">
-              <service class="Symfony\Component\Security\Http\AccessMap" public="false"/>
+              <service class="Symfony\Component\Security\Http\AccessMap" public="false">
+                <call method="add">
+                  <argument type="service" id="security.request_matcher.0ccca95482acf81566a65a241ba62f769ef531e789ba042a02f09cc5316c11e63615e8c0"/>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_FULLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
+                <call method="add">
+                  <argument type="service">
+                    <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+                      <argument>^/login*</argument>
+                    </service>
+                  </argument>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
+              </service>
             </argument>
             <argument type="service">
               <service class="Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint" public="false"/>
@@ -1316,9 +1285,9 @@
           <service class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
             <argument type="service" id="security.context"/>
             <argument type="collection">
-              <argument type="service" id="security.user.provider.concrete.in_memory"/>
+              <argument type="service" id="fos_facebook.auth"/>
             </argument>
-            <argument>secured_area</argument>
+            <argument>public</argument>
             <argument type="service" id="monolog.logger.security"/>
             <argument type="service" id="event_dispatcher"/>
           </service>
@@ -1331,19 +1300,26 @@
                 <argument type="service" id="router"/>
               </service>
             </argument>
-            <argument>/demo/secured/logout</argument>
-            <argument>/demo/</argument>
+            <argument>/logout</argument>
+            <argument>/</argument>
             <argument>null</argument>
             <call method="addHandler">
               <argument type="service">
                 <service class="Symfony\Component\Security\Http\Logout\SessionLogoutHandler" public="false"/>
               </argument>
             </call>
+            <call method="addHandler">
+              <argument type="service">
+                <service class="FOS\FacebookBundle\Security\Logout\FacebookHandler" public="false">
+                  <argument type="service" id="fos_facebook.api"/>
+                </service>
+              </argument>
+            </call>
           </service>
         </argument>
         <argument type="service">
-          <service class="Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener" public="false">
-            <tag name="security.remember_me_aware" id="secured_area" provider="security.user.provider.concrete.in_memory"/>
+          <service class="FOS\FacebookBundle\Security\Firewall\FacebookListener" public="false">
+            <tag name="security.remember_me_aware" id="public" provider="fos_facebook.auth"/>
             <argument type="service" id="security.context"/>
             <argument type="service" id="security.authentication.manager"/>
             <argument type="service">
@@ -1356,10 +1332,12 @@
                 <argument type="service" id="router"/>
               </service>
             </argument>
-            <argument>secured_area</argument>
+            <argument>public</argument>
             <argument type="collection">
-              <argument key="check_path">/demo/secured/login_check</argument>
-              <argument key="login_path">/demo/secured/login</argument>
+              <argument key="app_url">http://apps.facebook.com/diferencias/</argument>
+              <argument key="server_url">http://mallify.com/diferencias/</argument>
+              <argument key="check_path">/login_check</argument>
+              <argument key="login_path">/login</argument>
               <argument key="use_forward">false</argument>
               <argument key="always_use_default_target_path">false</argument>
               <argument key="default_target_path">/</argument>
@@ -1367,11 +1345,7 @@
               <argument key="use_referer">false</argument>
               <argument key="failure_path">null</argument>
               <argument key="failure_forward">false</argument>
-              <argument key="username_parameter">_username</argument>
-              <argument key="password_parameter">_password</argument>
-              <argument key="csrf_parameter">_csrf_token</argument>
-              <argument key="intention">authenticate</argument>
-              <argument key="post_only">true</argument>
+              <argument key="display">page</argument>
             </argument>
             <argument>null</argument>
             <argument>null</argument>
@@ -1380,12 +1354,38 @@
           </service>
         </argument>
         <argument type="service">
+          <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+            <argument type="service" id="security.context"/>
+            <argument>4e6b7a3dec431</argument>
+            <argument type="service" id="monolog.logger.security"/>
+          </service>
+        </argument>
+        <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AccessListener" public="false">
             <tag name="monolog.logger" channel="security"/>
             <argument type="service" id="security.context"/>
             <argument type="service" id="security.access.decision_manager"/>
             <argument type="service">
-              <service class="Symfony\Component\Security\Http\AccessMap" public="false"/>
+              <service class="Symfony\Component\Security\Http\AccessMap" public="false">
+                <call method="add">
+                  <argument type="service" id="security.request_matcher.0ccca95482acf81566a65a241ba62f769ef531e789ba042a02f09cc5316c11e63615e8c0"/>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_FULLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
+                <call method="add">
+                  <argument type="service">
+                    <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+                      <argument>^/login*</argument>
+                    </service>
+                  </argument>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
+              </service>
             </argument>
             <argument type="service" id="security.authentication.manager"/>
             <argument type="service" id="monolog.logger.security"/>
@@ -1402,15 +1402,29 @@
             </service>
           </argument>
           <argument type="service">
-            <service class="Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint" public="false">
-              <argument type="service" id="http_kernel"/>
-              <argument type="service">
-                <service class="Symfony\Component\Security\Http\HttpUtils" public="false">
-                  <argument type="service" id="router"/>
-                </service>
+            <service class="FOS\FacebookBundle\Security\EntryPoint\FacebookAuthenticationEntryPoint" public="false">
+              <argument type="service" id="fos_facebook.api"/>
+              <argument type="collection">
+                <argument key="app_url">http://apps.facebook.com/diferencias/</argument>
+                <argument key="server_url">http://mallify.com/diferencias/</argument>
+                <argument key="remember_me">true</argument>
+                <argument key="check_path">/login_check</argument>
+                <argument key="login_path">/login</argument>
+                <argument key="use_forward">false</argument>
+                <argument key="always_use_default_target_path">false</argument>
+                <argument key="default_target_path">/</argument>
+                <argument key="target_path_parameter">_target_path</argument>
+                <argument key="use_referer">false</argument>
+                <argument key="failure_path">null</argument>
+                <argument key="failure_forward">false</argument>
+                <argument key="display">page</argument>
               </argument>
-              <argument>/demo/secured/login</argument>
-              <argument>false</argument>
+              <argument type="collection">
+                <argument>email</argument>
+                <argument>user_birthday</argument>
+                <argument>user_location</argument>
+                <argument>publish_stream</argument>
+              </argument>
             </service>
           </argument>
           <argument>null</argument>
@@ -2189,8 +2203,8 @@
     <service id="fos_facebook.api" class="FOS\FacebookBundle\Facebook\FacebookSessionPersistence">
       <file>/Applications/MAMP/htdocs/diferencias/app/../vendor/facebook/src/base_facebook.php</file>
       <argument type="collection">
-        <argument key="appId">123456879</argument>
-        <argument key="secret">s3cr3t</argument>
+        <argument key="appId">145597308865831</argument>
+        <argument key="secret">e2b541a0623613634f753d044638367d</argument>
         <argument key="cookie">true</argument>
         <argument key="domain">null</argument>
       </argument>
@@ -2206,11 +2220,15 @@
         <argument>email</argument>
         <argument>user_birthday</argument>
         <argument>user_location</argument>
+        <argument>publish_stream</argument>
       </argument>
     </service>
     <service id="fos_facebook.twig" class="FOS\FacebookBundle\Twig\Extension\FacebookExtension">
       <tag name="twig.extension"/>
       <argument type="service" id="service_container"/>
+    </service>
+    <service id="fos_facebook.auth" class="FOS\FacebookBundle\Security\Authentication\Provider\FacebookProvider" public="false">
+      <argument type="service" id="fos_facebook.api"/>
     </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
@@ -2352,14 +2370,7 @@
       <argument>true</argument>
     </service>
     <service id="security.encoder_factory" class="Symfony\Component\Security\Core\Encoder\EncoderFactory">
-      <argument type="collection">
-        <argument key="Symfony\Component\Security\Core\User\User" type="collection">
-          <argument key="class">%security.encoder.plain.class%</argument>
-          <argument key="arguments" type="collection">
-            <argument>false</argument>
-          </argument>
-        </argument>
-      </argument>
+      <argument type="collection"/>
     </service>
     <service id="logger" class="Symfony\Bridge\Monolog\Logger">
       <argument>app</argument>

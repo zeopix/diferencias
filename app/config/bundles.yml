@@ -1,7 +1,7 @@
 fos_facebook:
      file:   %kernel.root_dir%/../vendor/facebook/src/base_facebook.php
      alias:  facebook
-     app_id: 123456879
-     secret: s3cr3t
+     app_id: 145597308865831
+     secret: e2b541a0623613634f753d044638367d
      cookie: true
-     permissions: [email, user_birthday, user_location]
+     permissions: [email, user_birthday, user_location, publish_stream]
