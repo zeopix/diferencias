@@ -208,8 +208,8 @@
     <parameter key="security.access.always_authenticate_before_granting">false</parameter>
     <parameter key="security.authentication.hide_user_not_found">true</parameter>
     <parameter key="fos_facebook.options.public" type="collection">
-      <parameter key="app_url">http://apps.facebook.com/diferencias/</parameter>
-      <parameter key="server_url">http://mallify.com/diferencias/</parameter>
+      <parameter key="app_url">http://apps.facebook.com/buscalasdiferencias/</parameter>
+      <parameter key="server_url">http://localhost/diferencias/web/</parameter>
       <parameter key="remember_me">true</parameter>
       <parameter key="check_path">/login_check</parameter>
       <parameter key="login_path">/login</parameter>
@@ -1194,7 +1194,7 @@
         <argument type="service" id="fos_facebook.auth"/>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>4e6b7a3dec431</argument>
+            <argument>4e6b8b299a307</argument>
           </service>
         </argument>
       </argument>
@@ -1273,6 +1273,17 @@
                   </argument>
                   <argument>null</argument>
                 </call>
+                <call method="add">
+                  <argument type="service">
+                    <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+                      <argument>^/login_check*</argument>
+                    </service>
+                  </argument>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
               </service>
             </argument>
             <argument type="service">
@@ -1334,8 +1345,8 @@
             </argument>
             <argument>public</argument>
             <argument type="collection">
-              <argument key="app_url">http://apps.facebook.com/diferencias/</argument>
-              <argument key="server_url">http://mallify.com/diferencias/</argument>
+              <argument key="app_url">http://apps.facebook.com/buscalasdiferencias/</argument>
+              <argument key="server_url">http://localhost/diferencias/web/</argument>
               <argument key="check_path">/login_check</argument>
               <argument key="login_path">/login</argument>
               <argument key="use_forward">false</argument>
@@ -1356,7 +1367,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>4e6b7a3dec431</argument>
+            <argument>4e6b8b299a307</argument>
             <argument type="service" id="monolog.logger.security"/>
           </service>
         </argument>
@@ -1385,6 +1396,17 @@
                   </argument>
                   <argument>null</argument>
                 </call>
+                <call method="add">
+                  <argument type="service">
+                    <service class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+                      <argument>^/login_check*</argument>
+                    </service>
+                  </argument>
+                  <argument type="collection">
+                    <argument>IS_AUTHENTICATED_ANONYMOUSLY</argument>
+                  </argument>
+                  <argument>null</argument>
+                </call>
               </service>
             </argument>
             <argument type="service" id="security.authentication.manager"/>
@@ -1405,8 +1427,8 @@
             <service class="FOS\FacebookBundle\Security\EntryPoint\FacebookAuthenticationEntryPoint" public="false">
               <argument type="service" id="fos_facebook.api"/>
               <argument type="collection">
-                <argument key="app_url">http://apps.facebook.com/diferencias/</argument>
-                <argument key="server_url">http://mallify.com/diferencias/</argument>
+                <argument key="app_url">http://apps.facebook.com/buscalasdiferencias/</argument>
+                <argument key="server_url">http://localhost/diferencias/web/</argument>
                 <argument key="remember_me">true</argument>
                 <argument key="check_path">/login_check</argument>
                 <argument key="login_path">/login</argument>

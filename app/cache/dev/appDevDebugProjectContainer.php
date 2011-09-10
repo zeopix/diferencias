@@ -1277,17 +1277,20 @@ class appDevDebugProjectContainer extends Container
 
         $h = new \Symfony\Component\HttpFoundation\RequestMatcher('^/login*');
 
-        $i = new \Symfony\Component\Security\Http\AccessMap();
-        $i->add($a, array(0 => 'IS_AUTHENTICATED_FULLY'), NULL);
-        $i->add($h, array(0 => 'IS_AUTHENTICATED_ANONYMOUSLY'), NULL);
+        $i = new \Symfony\Component\HttpFoundation\RequestMatcher('^/login_check*');
 
-        $j = new \Symfony\Component\Security\Http\HttpUtils($e);
+        $j = new \Symfony\Component\Security\Http\AccessMap();
+        $j->add($a, array(0 => 'IS_AUTHENTICATED_FULLY'), NULL);
+        $j->add($h, array(0 => 'IS_AUTHENTICATED_ANONYMOUSLY'), NULL);
+        $j->add($i, array(0 => 'IS_AUTHENTICATED_ANONYMOUSLY'), NULL);
 
-        $k = new \Symfony\Component\Security\Http\Firewall\LogoutListener($c, $j, '/logout', '/', NULL);
-        $k->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
-        $k->addHandler(new \FOS\FacebookBundle\Security\Logout\FacebookHandler($f));
+        $k = new \Symfony\Component\Security\Http\HttpUtils($e);
 
-        return $this->services['security.firewall.map.context.public'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($i, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $b), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($c, array(0 => $this->get('fos_facebook.auth')), 'public', $b, $d), 2 => $k, 3 => new \FOS\FacebookBundle\Security\Firewall\FacebookListener($c, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $j, 'public', array('app_url' => 'http://apps.facebook.com/diferencias/', 'server_url' => 'http://mallify.com/diferencias/', 'check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'display' => 'page'), NULL, NULL, $b, $d), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($c, '4e6b7a3dec431', $b), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($c, $this->get('security.access.decision_manager'), $i, $g, $b)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($c, $this->get('security.authentication.trust_resolver'), $j, new \FOS\FacebookBundle\Security\EntryPoint\FacebookAuthenticationEntryPoint($f, array('app_url' => 'http://apps.facebook.com/diferencias/', 'server_url' => 'http://mallify.com/diferencias/', 'remember_me' => true, 'check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'display' => 'page'), array(0 => 'email', 1 => 'user_birthday', 2 => 'user_location', 3 => 'publish_stream')), NULL, NULL, $b));
+        $l = new \Symfony\Component\Security\Http\Firewall\LogoutListener($c, $k, '/logout', '/', NULL);
+        $l->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
+        $l->addHandler(new \FOS\FacebookBundle\Security\Logout\FacebookHandler($f));
+
+        return $this->services['security.firewall.map.context.public'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($j, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $b), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($c, array(0 => $this->get('fos_facebook.auth')), 'public', $b, $d), 2 => $l, 3 => new \FOS\FacebookBundle\Security\Firewall\FacebookListener($c, $g, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $k, 'public', array('app_url' => 'http://apps.facebook.com/buscalasdiferencias/', 'server_url' => 'http://localhost/diferencias/web/', 'check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'display' => 'page'), NULL, NULL, $b, $d), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($c, '4e6b8b299a307', $b), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($c, $this->get('security.access.decision_manager'), $j, $g, $b)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($c, $this->get('security.authentication.trust_resolver'), $k, new \FOS\FacebookBundle\Security\EntryPoint\FacebookAuthenticationEntryPoint($f, array('app_url' => 'http://apps.facebook.com/buscalasdiferencias/', 'server_url' => 'http://localhost/diferencias/web/', 'remember_me' => true, 'check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'display' => 'page'), array(0 => 'email', 1 => 'user_birthday', 2 => 'user_location', 3 => 'publish_stream')), NULL, NULL, $b));
     }
 
     /**
@@ -1997,7 +2000,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        return $this->services['security.authentication.manager'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => $this->get('fos_facebook.auth'), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('4e6b7a3dec431')));
+        return $this->services['security.authentication.manager'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => $this->get('fos_facebook.auth'), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('4e6b8b299a307')));
     }
 
     /**
@@ -2362,8 +2365,8 @@ class appDevDebugProjectContainer extends Container
             'security.access.always_authenticate_before_granting' => false,
             'security.authentication.hide_user_not_found' => true,
             'fos_facebook.options.public' => array(
-                'app_url' => 'http://apps.facebook.com/diferencias/',
-                'server_url' => 'http://mallify.com/diferencias/',
+                'app_url' => 'http://apps.facebook.com/buscalasdiferencias/',
+                'server_url' => 'http://localhost/diferencias/web/',
                 'remember_me' => true,
                 'check_path' => '/login_check',
                 'login_path' => '/login',
