@@ -22,6 +22,6 @@ security:
                 handlers: ["fos_facebook.logout_handler"]
                 
     access_control:
-      #  - { path: ^/facebook/,           role: [ROLE_FACEBOOK] }
+        - { path: ^/facebook/,           role: [ROLE_FACEBOOK] }
         - { path: ^/.*,                  role: [IS_AUTHENTICATED_ANONYMOUSLY] }
           

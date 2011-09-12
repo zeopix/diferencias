@@ -1,6 +1,48 @@
 <html>
 	<head>
-		<title>Busca las diferencias</title>
+	<TITLE>El juego de encontrar las 3 diferencias</TITLE>
+<META NAME="subject" CONTENT="Games, Entertainment, Social, Facebook">
+<META NAME="Description" CONTENT="Descubre las diferencias en el menor tiempo posible. Se llega a poner realmente difícil!">
+<META NAME="Classification" CONTENT="Social game">
+<META NAME="Keywords" CONTENT="juego, diferencias, 3, encontrar, jugar, diversion, entretenimiento, facebook, social, clasico">
+<META NAME="Geography" CONTENT="Spain">
+<META NAME="Language" CONTENT="Spanish">
+<META HTTP-EQUIV="Expires" CONTENT="never">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+<META NAME="Copyright" CONTENT="Many-Few.com">
+<META NAME="distribution" CONTENT="Global">
+<META NAME="Robots" CONTENT="INDEX,FOLLOW">
+
+		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+		<link rel="stylesheet" href="http://localhost/diferencias/web/bundles/miigame/css/layout.css">
+		<meta >
+        <script src="http://code.jquery.com/jquery-1.6.3.min.js"></script> 
+        <script> 
+            $(function(){
+                
+                $(".easy").click(function(){
+                    
+                    $("#slider").animate({'margin-left' : '0px'});
+                });
+                
+                $(".normal").click(function(){
+                    
+                    $("#slider").animate({'margin-left' : '-740px'});
+                });
+                
+                $(".hard").click(function(){
+                    
+                    $("#slider").animate({'margin-left' : '-1480px'});
+                });
+                
+                {% block scripts %}
+                {% endblock %}
+                
+            })
+        </script> 
+
+
 	</head>
 	<body>
 		{% block body %}

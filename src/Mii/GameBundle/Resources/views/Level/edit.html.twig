@@ -1,0 +1,54 @@
+{% extends 'MiiGameBundle:Entrada:layout.html.twig' %}
+{% block scripts %}
+$("#imageholder").dblclick(function(e){
+
+	var x = e.pageX - this.offsetLeft;
+	var y = e.pageY - this.offsetTop;
+
+     $.ajax({
+     	url : "{{ path('addsolution', { 'id' : entity.id }) }}",
+     	type : 'POST',
+     	data : 'xcenter='+x+'&ycenter='+y,
+     	success : function(r){
+     		alert(r);
+     	}
+     })
+     
+   });
+{% endblock %}
+{% block body %}
+<h1>Level edit</h1>
+
+<form action="{{ path('level_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<div id="imageholder" style="background-image: url({{ asset(entity.getWebPath) }});">
+{% for solution in entity.solutions %}
+<div class="rmv" id="{{ solution.id }}" href="#" style="margin-left: {{ solution.xstart }}px; margin-top: {{ solution.ystart }}px;"><a class="remove" href="{{ path('removesolution', { 'id' : solution.id }) }}" id="{{ solution.id }}" href="#" s><img src="{{ asset('bundles/miigame/images/remove.png') }}"></a></div>
+{% endfor %}
+<div style="clear:both"></div>
+</div>
+
+{% for solution in entity.solutions %}
+<div>X: {{ solution.xstart }} Y: {{ solution.ystart }} - <a class="remove" href="{{ path('removesolution', { 'id' : solution.id }) }}" id="{{ solution.id }}" href="#" s>REMOVE</a></div>
+{% endfor %}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('level') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('level_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

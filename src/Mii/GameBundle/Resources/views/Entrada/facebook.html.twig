@@ -1,4 +1,52 @@
 {% extends 'MiiGameBundle:Entrada:layout.html.twig' %}
 {% block body %}
-my body
+<div class="cointainer"> 
+	<div id="slider-wrapper"> 
+                <ul id="slider"> 
+                    <!-- Diapositiva 1 --> 
+                    <li class="slide">
+                        <ul class="niveles">
+					{% for level in easylevels %}
+					
+					<li><a class="btn punch" href="{{ path('playlevel', { 'level' : level.id }) }}">{{ level.id }}</a></li>
+					{% if loop.index is divisibleby(5)  %}<div style="clear:both"></div>{% endif %}
+					{% endfor %}
+					
+				<div style="clear:both"></div>
+						</ul>
+					</li>
+                    <!-- Diapositiva 1 --> 
+                    <li class="slide">
+                        <ul class="niveles">
+					{% for level in normallevels %}
+					
+					<li><a class="btn punch">{{ level.id }}</a></li>
+					{% if loop.index is divisibleby(5)  %}<div style="clear:both"></div>{% endif %}
+					{% endfor %}
+					
+				<div style="clear:both"></div>
+						</ul>
+					</li>
+                    <!-- Diapositiva 1 --> 
+                    <li class="slide">
+                        <ul class="niveles">
+					{% for level in hardlevels %}
+					
+					<li><a class="btn punch">{{ level.id }}</a></li>
+					{% if loop.index is divisibleby(5)  %}<div style="clear:both"></div>{% endif %}
+					{% endfor %}
+					
+				<div style="clear:both"></div>
+						</ul>
+					</li>
+				</ul>
+				
+				<div style="clear:both"></div>
+				<div class="botonera">
+				<a class="btn success large easy">Facil</a>
+				<a class="btn primary large normal">Normal</a>
+				<a class="btn danger large hard">Dificil</a>
+				</div>
+	</div>
+</div>
 {% endblock %}

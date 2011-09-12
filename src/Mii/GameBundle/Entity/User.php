@@ -24,6 +24,12 @@ class User extends BaseUser
         // your own logic
     }
     
+    
+    /**
+     * @ORM\Column(name="solved", type="array")
+     */
+    private $solved;
+    
     /**
      * var string
      * @ORM\Column(name="firstname", type="string")
@@ -41,7 +47,13 @@ class User extends BaseUser
      * @ORM\Column(name="facebookID", type="integer", length="60")
      */
     protected $facebookID;
-
+    /**
+     * @var string $title
+     *
+     * @ORM\OneToMany(targetEntity="Partida", mappedBy="user")
+     */
+    private $partidas;
+    
     /**
      * return string
      */
@@ -120,5 +132,19 @@ class User extends BaseUser
         if (isset($fbdata['email'])) {
             $this->setEmail($fbdata['email']);
         }
+    }
+    
+    public function setSolved($solved){
+    	$this->solved = $solved;
+    }
+    
+    public function getSolved(){
+    	return $this->solved;
+    }
+    
+    public function addSolved($solved){
+    	if(!in_array($solved,$this->solved)){
+    		$this->solved[] = $solved;
+    	}
     }
 }
