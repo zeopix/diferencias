@@ -38,7 +38,7 @@
                         <ul class="niveles">
 					{% for level in normallevels %}
 					
-					<li><a class="btn punch">{{ level.id }}</a></li>
+					<li><a class="btn punch" href="{{ path('playlevel', { 'level' : level.id }) }}">{{ level.id }}</a></li>
 					{% if loop.index is divisibleby(5)  %}<div style="clear:both"></div>{% endif %}
 					{% endfor %}
 					
@@ -50,7 +50,7 @@
                         <ul class="niveles">
 					{% for level in hardlevels %}
 					
-					<li><a class="btn punch">{{ level.id }}</a></li>
+					<li><a class="btn punch" href="{{ path('playlevel', { 'level' : level.id }) }}">{{ level.id }}</a></li>
 					{% if loop.index is divisibleby(5)  %}<div style="clear:both"></div>{% endif %}
 					{% endfor %}
 					
