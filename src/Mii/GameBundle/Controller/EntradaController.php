@@ -15,7 +15,7 @@ use Mii\GameBundle\Entity\Solution;
 class EntradaController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/index")
      */
     public function indexAction()
     {
@@ -23,7 +23,7 @@ class EntradaController extends Controller
     }
     
     /**
-     * @Route("/facebook/", name="levels")
+     * @Route("/", name="levels")
      */
     public function facebookAction()
     {
@@ -40,7 +40,7 @@ class EntradaController extends Controller
     }
     
     /**
-     * @Route("/facebook/play/{level}" , name="playlevel")
+     * @Route("/play/{level}" , name="playlevel")
      */
     public function playLevelAction($level)
     {

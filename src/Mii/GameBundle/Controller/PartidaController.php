@@ -16,7 +16,7 @@ class PartidaController extends Controller
 {
     
     /**
-     * @Route("/facebook/play/{level}/start" , name="startlevel")
+     * @Route("/play/{level}/start" , name="startlevel")
      */
     public function startLevelAction($level)
     {
@@ -61,7 +61,7 @@ class PartidaController extends Controller
      /**
      * Finds and displays a Level entity.
      *
-     * @Route("/facebook/partida/click", name="trysolution")
+     * @Route("/partida/click", name="trysolution")
      */
     public function trySolutionAction()
     {
