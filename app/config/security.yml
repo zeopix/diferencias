@@ -11,8 +11,8 @@ security:
               # since anonymous is allowed users will not be forced to login
              pattern:   ^/.*
              fos_facebook:
-                 app_url: "http://apps.facebook.com/buscalasdiferencias/"
-                 server_url: "http://mallify.com/diferencias/web/"
+                 app_url: "http://apps.facebook.com/buscalasdiferencias/facebook/"
+                 server_url: "http://mallify.com/diferencias/web/facebook/"
              anonymous: true
              logout:
                  handlers: ["fos_facebook.logout_handler"]
