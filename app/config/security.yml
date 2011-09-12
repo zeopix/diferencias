@@ -13,7 +13,7 @@ security:
             fos_facebook:
                 app_url: "http://apps.facebook.com/buscalasdiferencias/"
                 server_url: "http://mallify.com/diferencias/web/"
-                login_path: /login
+                login_path: /facebook/
                 check_path: /login_check
                 default_target_path: /
                 provider: my_fos_facebook_provider
