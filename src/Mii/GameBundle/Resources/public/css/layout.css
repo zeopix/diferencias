@@ -1,5 +1,5 @@
 
-#slider-wrapper { overflow: hidden; width: 740px; background-image: url("../images/fondo.jpg");}
+#slider-wrapper { overflow: hidden; width: 740px; background-image: url("../images/grid1.jpg");}
 #slider { width: 8000px; padding: 0px; margin: 0px; }
 #slider li.slide { float:left; display:block; width: 740px; padding: 0px; margin: 0px; }
 .niveles{ width: 740px; margin: 20px; margin-left: 110px; }
