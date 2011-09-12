@@ -77,7 +77,7 @@ class LevelController extends Controller
             throw $this->createNotFoundException('Unable to find Level entity.');
         }
         
-        $radius = 5;
+        $radius = 13;
         $x_center = $request->get('xcenter');
         $y_center = $request->get('ycenter');
         
