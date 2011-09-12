@@ -29,13 +29,16 @@ class EntradaController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	
-    	$levels = $em->getRepository('MiiGameBundle:Level')->findAll();
+    	$easylevels = $em->getRepository('MiiGameBundle:Level')->findBy(Array('block'=>'first'));
+    	$normallevels = $em->getRepository('MiiGameBundle:Level')->findBy(Array('block'=>'second'));
+    	$hardlevels = $em->getRepository('MiiGameBundle:Level')->findBy(Array('block'=>'third'));
+
     	
     	
         return $this->render('MiiGameBundle:Entrada:facebook.html.twig', Array(
-        	'easylevels' => $levels,
-        	'normallevels' => $levels,
-        	'hardlevels' => $levels
+        	'easylevels' => $easylevels,
+        	'normallevels' => $normallevels,
+        	'hardlevels' => $hardlevels
         ));
     }
     
@@ -51,6 +54,17 @@ class EntradaController extends Controller
     	
         return $this->render('MiiGameBundle:Entrada:play.html.twig', Array(
         	'level' => $level
+        ));
+    }
+    
+    /**
+     * @Route("/facebook/channel" , name="channel")
+     */
+    public function channelAction($level)
+    {
+    	
+    	
+        return $this->render('MiiGameBundle:Entrada:channel.html.twig', Array(
         ));
     }
     

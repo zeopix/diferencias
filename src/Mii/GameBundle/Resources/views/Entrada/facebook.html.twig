@@ -1,4 +1,21 @@
 {% extends 'MiiGameBundle:Entrada:layout.html.twig' %}
+{% block scripts %}
+	$(".easy").click(function(){
+		$(".normal").removeClass("disabled");
+		$(".hard").removeClass("disabled");
+		$(".easy").addClass("disabled");
+	});
+	$(".normal").click(function(){
+		$(".easy").removeClass("disabled");
+		$(".hard").removeClass("disabled");
+		$(".normal").addClass("disabled");
+	});
+	$(".hard").click(function(){
+		$(".normal").removeClass("disabled");
+		$(".easy").removeClass("disabled");
+		$(".hard").addClass("disabled");
+	});
+{% endblock %}
 {% block body %}
 <div class="cointainer"> 
 	<div id="slider-wrapper"> 
@@ -43,7 +60,7 @@
 				
 				<div style="clear:both"></div>
 				<div class="botonera">
-				<a class="btn success large easy">Facil</a>
+				<a class="btn success large easy disabled">Facil</a>
 				<a class="btn primary large normal">Normal</a>
 				<a class="btn danger large hard">Dificil</a>
 				</div>

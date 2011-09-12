@@ -49,6 +49,15 @@ a.punch:active {
     margin-top: 1px;
  }
 
+a.punch.normalcolor {
+
+    -webkit-box-shadow: inset 0 1px 10px 1px #FF0, 0px 1px 0 #0d2c1d, 0 6px 0px #551053, 0 8px 4px 1px #111111;
+    -moz-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+    -ms-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+    -o-box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+    box-shadow: inset 0 1px 10px 1px #5c8bee, 0px 1px 0 #1d2c4d, 0 6px 0px #1f3053, 0 8px 4px 1px #111111;
+
+}
 
 /* botones */
 .botonera { padding: 10px; /* box-shadow: 0px 0px 20px black; background-color: #EEE; */ padding-left: 105px; margin-bottom: 30px;}

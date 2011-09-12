@@ -1,12 +1,14 @@
 {% extends 'MiiGameBundle:Entrada:layout.html.twig' %}
 {% block scripts %}
 	function endGame(){
-
-		$("#loadholder").html();
+		var status = $("#loader").css('display');
 		
+		if(status == 'none'){
 		$("#loadholder").html("<br><br>Se ha acabado el tiempo! Vuelve a intentarlo. <br><a href='{{ path('playlevel',{ 'level' : level.id }) }}' class='btn primary large'>Reiniciar nivel</a>");
 
 		$("#loader").fadeIn();
+		
+		}
 	}
 	
 	
@@ -42,6 +44,24 @@
 						     			$("#loadholder").html();
 										$("#loadholder").html("<br><br>Felicidades, has superado el nivel {{ level.id }} en "+r.diff+" segundos! <br><a class='btn primary large' href='{{ path('playlevel',{ 'level' : level.id+1 }) }}'>Siguiente nivel ("+parseInt({{ level.id }}+1)+")</a>");
 						     			$("#loader").fadeIn();
+						     			
+						     			FB.ui({
+										    method: 'feed',
+    										name: 'Encuentra las 3 diferencias en el menor tiempo posible!',
+										    link: 'http://apps.facebook.com/buscalasdiferencias/',
+										    picture: 'http://fbrell.com/f8.jpg',
+										    caption: 'ha superado el nivel {{ level.id }} en '+r.diff+' segundos!',
+										    description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+										  },
+										  function(response) {
+										    if (response && response.post_id) {
+											      alert('Post was published.');
+										    } else {
+											      alert('Post was not published.');
+										    }
+										  });
+
+
 
 						     		}else{
 						     			if(r.solution.status){
@@ -85,6 +105,28 @@
    
 {% endblock %}
 {% block body %}
+
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  FB.init({
+    appId  : '145597308865831',
+    status : true, 
+    cookie : true, 
+    xfbml  : true,
+    channelURL : 'http://www.mallify.com/diferencias/web/facebook/channel', // channel.html file
+    oauth  : true // enable OAuth 2.0
+  });
+  
+  function behave(){
+
+  }
+  
+</script>
+
+
+
 <div id="loader">
 <div style="margin-bottom: 40px;"></div>
 <script type="text/javascript"><!--
