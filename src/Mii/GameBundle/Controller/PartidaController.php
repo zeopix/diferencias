@@ -141,7 +141,7 @@ class PartidaController extends Controller
         }
         
        
-        $em->persist($user);
+        //$em->persist($user);
         $em->persist($partida);
         $em->flush();
 
