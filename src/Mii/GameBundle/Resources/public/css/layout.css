@@ -73,3 +73,4 @@ a.punch.normalcolor {
 #statusbar { background-color: white; box-shadow: 0px 0px 10px black;}
 
 #startbutton { margin-top: 10px; width: 280px; font-size: 16px; padding: 20px;}
+#header { display: block; width: 740px; padding: 5px; background-color: #EEE; box-shadow: 0px 0px 3px black; }

@@ -45,6 +45,20 @@
 
 	</head>
 	<body>
+	<div id="header">
+		<img style="float:left; margin: 10px;" src="{{ asset('bundles/miigame/images/icon.png') }}" height="50px"> <h2 style="float:left; margin-left: 10px">Busca las 3 diferencias </h2>
+		<div style="float:right;">
+			<div id="fb-root"></div>
+<script>(function(d){
+  var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+  js = d.createElement('script'); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=145597308865831&xfbml=1";
+  d.getElementsByTagName('head')[0].appendChild(js);
+}(document));</script>
+<div class="fb-like" data-href="http://apps.facebook.com/buscalasdiferencias/" data-send="true" data-width="300" data-show-faces="true"></div>
+		</div>
+		<div style="clear:both"></div>
+	</div>
 		{% block body %}
 		{% endblock %}
 	</body>
