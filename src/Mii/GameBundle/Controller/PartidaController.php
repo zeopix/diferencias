@@ -24,6 +24,7 @@ class PartidaController extends Controller
 
     	$em = $this->getDoctrine()->getEntityManager();
     	
+    	$user = $this->get('security.context')->getToken()->getUser();
     	$level = $em->getRepository('MiiGameBundle:Level')->find($level);
     	
     	$partida = new Partida();
