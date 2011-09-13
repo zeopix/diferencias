@@ -59,8 +59,9 @@ class Partida
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="partidas")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * ORM\ManyToOne(targetEntity="User", inversedBy="partidas")
+     * ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\Column(name="user", type="integer")
      */
     private $user;
     
