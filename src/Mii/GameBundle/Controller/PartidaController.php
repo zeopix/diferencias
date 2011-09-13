@@ -24,7 +24,7 @@ class PartidaController extends Controller
 
     	$em = $this->getDoctrine()->getEntityManager();
     	
-    	$user = $this->get('security.context')->getToken()->getUser();
+    	//$user = $this->get('security.context')->getToken()->getUser();
     	$level = $em->getRepository('MiiGameBundle:Level')->find($level);
     	
     	$partida = new Partida();
@@ -36,7 +36,7 @@ class PartidaController extends Controller
     	$partida->setLevel($level);
     	
     	//die($user);
-    	$partida->setUser($user);
+    	//$partida->setUser($user);
     	
     	$partida->setTimeout(0);
     	//$partida->setUser();
