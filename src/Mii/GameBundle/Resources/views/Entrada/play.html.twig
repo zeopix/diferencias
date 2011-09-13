@@ -28,6 +28,12 @@
 						$("#timeslider").animate({'width' : '0px' }, {{ level.timeout }}, function(){
 							endGame();
 						});
+						   setInterval(function(){
+   							var time = parseInt($("#timeslider").html());
+						   	if(time > 0){
+						   		$("#timeslider").html(time-1);
+						   	}
+						   },1000)
 						
 						$("#imageholder").click(function(e){
 
@@ -95,12 +101,7 @@
 		
 	});
    
-   setInterval(function(){
-   	var time = parseInt($("#timeslider").html());
-   	if(time > 0){
-   		$("#timeslider").html(time-1);
-   	}
-   },1000)
+
    
 {% endblock %}
 {% block body %}
