@@ -36,7 +36,7 @@ class PartidaController extends Controller
     	$partida->setLevel($level);
     	
     	//die($user);
-    	//$partida->setUser($user);
+    	$partida->setUser(0);
     	
     	$partida->setTimeout(0);
     	//$partida->setUser();
